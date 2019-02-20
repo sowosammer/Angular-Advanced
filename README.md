@@ -118,7 +118,7 @@ Kann auch architektur vorgaben (Schichtentrennung) beim übersetzen prüfen.
 - Verhindern eintritt oder auch verlassen (z.B. noch nicht gespeichert)
 
 **Existierende Interfaces:**
-- canActivate (Entscheidung auf der Ebene der Componente)
+- canActivate (Entscheidung auf der Ebene der Componente) - (aktuell aus @angular/router verwenden)
 - canActivateChild (Entscheidung auf der Ebene des Parents)
 - canLoad (z.B. für LazyLoading interessant)
 - canDeactivate<T> (T ~ Componente) (verhindern des verlassens)
@@ -154,7 +154,28 @@ Idee: Chain of Responibility
 Bei Registrierung sollte im Appmodule, der/die Provider angegeben werden , provide : HTTP_INTERCEPTOR, .. *multi**: true)
 multi true ist wichtig, sonst wird nur der letzte ausgeführt.
 
-## 
+## Directive
+
+Was sind Direktiven (zeigen sich nicht selbst, Beispiel ngfor, ngif)
+
+Ähnlich Componente aber ist eben nicht sichtbar -> kein HTML
+aber selector. Der selector ist ein CSS Selector.
+
+``` @Directive({
+```   selector: '[clickWithWarning]'
+```})
+``` export class .... implements OnInit {
+```
+``` @HostBinding('class') 
+```
+``` @HostLIistener('click', ['$event'])
+``` andleClick($event): void {
+```
+```   this.clickWithWarning(..);
+``` }
+``` }
+
+<button (clickwithWarning)="tuwas(parm)"
 
 # Sonstiges
 Quellcode hat gravitation -> Zieht weiteren Quellcode an -> schlecht für Architektur weil Componenten zu groß werden
