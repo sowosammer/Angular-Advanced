@@ -5,6 +5,7 @@ Kurs Angular Advanced
 
 Frage: 
 Differenz : Submodule <-> Paket
+<link routerlink  ??
 
 ## Struktur
 Aufteilung
@@ -72,7 +73,7 @@ Jetzt im Service selbst machen.
 ### Injectables @Optional
 constructor(@optional() private xy: LoggerService
 
-In class namedesModuls : folgendes static Methode anlegen, wird bereits vom Compiler erstellt. 
+In class namedes**Moduls** (z.B. logger.module.ts) : folgendes static Methode anlegen, wird bereits vom Compiler erstellt. 
 Schleifen und ähnlich komplexere Programmierfunktionen sind nicht erlaubt. Meldet aber erst der Prod-Compiler.
 
 
@@ -111,6 +112,20 @@ Projectteile können dann aus Monorepo separate z.B. in npm registry auslagern.
 ## Nx - von Nrwl - erwetiert CLI
 Visualisieren Modulstruktur
 Kann auch architektur vorgaben (Schichtentrennung) beim übersetzen prüfen.
+
+## Guard - Routerguard
+- Services 
+- Verhindern eintritt oder auch verlassen (z.B. noch nicht gespeichert)
+
+**Existierende Interfaces:**
+- canActivate (Entscheidung auf der Ebene der Componente)
+- canActivateChild (Entscheidung auf der Ebene des Parents)
+- canLoad (z.B. für LazyLoading interessant)
+- canDeactivate<T> (T ~ Componente) (verhindern des verlassens)
+
+Liefern Resultete: boolean, Obervable<boolean> (, Promise<boolean>)
+  
+Müssen im Module registriert werden. 
 
 # Sonstiges
 Quellcode hat gravitation -> Zieht weiteren Quellcode an -> schlecht für Architektur weil Componenten zu groß werden
