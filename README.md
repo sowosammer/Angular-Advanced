@@ -5,7 +5,9 @@ Kurs Angular Advanced
 
 Frage: 
 Differenz : Submodule <-> Paket
-<link routerlink  ??
+<link routerlink  ?? // vs. link zu css/less 
+httponly Cookies
+
 
 ## Struktur
 Aufteilung
@@ -177,6 +179,55 @@ aber selector. Der selector ist ein CSS Selector.
 
 <button (clickwithWarning)="tuwas(parm)"
 
+## Login Access Control
+- Login
+- OAuth 2
+- Single Sign On
+
+Autorisierung gegen den Authorization Server. Dieser liefert AccessToken um sich an anderen Backends etc. anzumelden bzw. bei anfragen mitgegeben werden. -> keine Cookies nutzen -> XSRF Angriffe werden verhindert.
+
+### Auth Server 
+1. Active Directory Federation Services (
+2. Identity Server (.Net)
+3. Redhat Keycloak 
+MS favorisiert 2 und 3. ggf. auch um eine Facade zu 1. zu haben.
 # Sonstiges
 Quellcode hat gravitation -> Zieht weiteren Quellcode an -> schlecht für Architektur weil Componenten zu groß werden
+
+## Protokoll für Authendifizierung
+
+- OAuth2
+- Protokoll um eingeschränkte Rechte weiter zu geben.
+- aktuell wird der Flow (Variante von OAuth2) 'Implizit Flow' für SPA genutzt. Müssen jedoch einige Bestpractices eingehalten werden, sonst nicht ganz sicher. (heute normalerweise mit OIDC also Implizit Flow * OIDC).
+
+### OIDC + Implicit Flow
+Client bekommt zusätzlich zum Access Toke noch Id-Token. Id-Token (Json Web Token) ist für Client. Access Token sind für die Kommunikation auf Backends.
+
+Refresh Tokens sind im Browser nicht erwünscht/erlaubt.
+
+## Library für OAuth2 von Manfred Steyer 
+- angular-oauth2-oidc 
+
+### OAuth Configuration 
+Wo ist der Server, etc.
+Wo:
+**issuer**: URl des Identity Servers
+
+Wer sind wir: Das muss am Authentification-Server registriert sein.
+**redirectUri**: 
+**clientId**: 
+
+Was wollt ihr, mögliche Beispiele: 
+**scope**: 'openid profile email voucher';
+    //       Identitiy          | Access 
+    //       Id-Token           | Access-Token
+    //        OIDC              | Custom
+
+OAuthService wird an AppComponent übergeben im Construktor.
+
+in Interceptor wird den Bearer Token anhängen, der vom Auth. Server bekommen hat.
+Der wird beim http request mitgesendet. Das kann dann die Library von Manfred Steyer.
+Bearer Token kann über F12 im Header angesehen werden.
+Library liefert auch den Refresh.
+
 
