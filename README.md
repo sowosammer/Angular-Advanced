@@ -127,6 +127,35 @@ Liefern Resultete: boolean, Obervable<boolean> (, Promise<boolean>)
   
 Müssen im Module registriert werden. 
 
+Guard umsetzen - **implements** CanActivate (o.Ä.), CanDeactivate,...
+@Injectable
+Nutzt ActivatedRouteSnapshot.. und RouterStateSnapshot... bei der verwendung der canactivate Schnittstelle.
+Wenn das Interface für den Guard umgesetzt wird, wird z.B. canActivate realisiert. Das kann auch den router nutzen und auf eine spezielle Seite weiterleiten wenn es angesagt ist. (this.router.navigate())
+
+In der implementierung canDeaActivate<T> sollte der Generische Teil möglichst schlank über ein Interface definiert werden.
+
+## HttpInterceptor
+
+Nützlich für allgemein Umsetzungen für grundsätzliches Handling von Fehlern, Daten, spezielles Routing,,..
+
+- man implementiert das interface HttpInterceptor
+- kann sich in eine Anfrage einklinken 
+- kann einen Header mitliefern (z.B. Auth)
+- parsen der Antwort
+- Caching von antworten (z.B. 10 Erg. anzeigen rest, dann erst mal cachen)
+- Ist global, wird also einsatzgebiet immer genutzt. Mehrere Interceptoren sollten unabhängig voneinander sein. Wenn das nicht möglich ist, ist die reihenfolge der Registrierung relevant.
+beim automatischen Generieren der des interface werden false Handler etc. angegeben. muss bereinigt werden.
+
+Bei der Nutzung des Interceptor muss beachtet werden, dass z.B. keine Sicherheitsrelevanten Daten an Drittanbieter weitergegeben werden.
+Mein Header mit Userdaten nur wenn meine Url genutzt wird zulassen.
+
+Idee: Chain of Responibility
+
+Bei Registrierung sollte im Appmodule, der/die Provider angegeben werden , provide : HTTP_INTERCEPTOR, .. *multi**: true)
+multi true ist wichtig, sonst wird nur der letzte ausgeführt.
+
+## 
+
 # Sonstiges
 Quellcode hat gravitation -> Zieht weiteren Quellcode an -> schlecht für Architektur weil Componenten zu groß werden
 
