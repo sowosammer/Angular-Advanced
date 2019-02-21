@@ -301,6 +301,7 @@ Renderer (Angular Methode) um den Renderingunterschied zwischen Server und Clien
 
 ### Service Worker 
 
-Einfach zu nuten mit Frameworks (Workbox (kann viel, aufwändiger)  oder Angular/service-worker (einfach zu handhaben))
+Einfach zu nutzen mit Frameworks (Workbox (kann viel, aufwändiger)  oder Angular/service-worker (einfach zu handhaben))
+@angular/service-worker installieren per: ng add @angular/pwa
 
-
+PWA: Grundsätzlich nützlich wenn alles außer index.html gecached wird. Diese ist Problematisch im bezug auf SSR.
