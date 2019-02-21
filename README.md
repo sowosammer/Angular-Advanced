@@ -8,6 +8,8 @@ Differenz : Submodule <-> Paket
 <link routerlink  ?? // vs. link zu css/less 
 httponly Cookies
 
+Links:
+Softwarearchitekt.at
 
 ## Struktur
 Aufteilung
@@ -229,5 +231,76 @@ in Interceptor wird den Bearer Token anhängen, der vom Auth. Server bekommen ha
 Der wird beim http request mitgesendet. Das kann dann die Library von Manfred Steyer.
 Bearer Token kann über F12 im Header angesehen werden.
 Library liefert auch den Refresh.
+
+## Performance
+
+Angular CLI macht automatisch diverse optimierung wie früher Webpack.
+
+### Lazy Loading
+
+Startperformance deutlich erhöhen. 
+Router bietet dafür Highlevel API. LoadChildren in der Route.
+Funktioniert weil jeden Modul eine eigene Route hat und dort die Componente die geladen werden soll.
+
+Achtung:
+- im Appmodule Lazy Module herausnehmen
+- Pfade anpassen. Im Module route einstieg nur noch  '' weil der ersteinstieg jetzt im BAsismodul steht (app.module.ts).
+
+### Preloading 
+
+Eigentlich immer gut - individuelle Anpassungen erfolg fraglich . 
+Effekt, dass es zu verzögerungen wegen des Nachladens kommt.
+Preloading Strategie einrichten. z.B. preloadStrategy PreloadAllModules ist meist gut, weil alles nach dem Programmstart geladen wird.
+Verbesserung speziell wenn das Laden abhängig ist von Anmeldung und Rechten. 
+Die Strategie muss im app.module angegeben (eigentlich in den routing module) werden. 
+
+Man kann eigene Strategien erstellen. Interface erstellen, Service erstellen (heißt hier dann oft Strategy) der PreLoadingStrategy implementiert.
+
+PreloadingStrategy benötigt eine Methode preload (Parameter: route, fn (vorzuladendes Modul ) .
+  
+Strategie kann je route behandelt werden.
+
+In Routen infos können auch data Infos hinterlegt werden mit denen auch im Preloading reagiert werden kann.
+
+### OnPush 
+Datenbindungsstrategie (nicht erlaubt aber wie kann man den Changetracker anzeigbar machen -> im Binding {{ funktionsaufruf machen }}. 
+Bestimmte Komponenten auf der automatischen Änderungsverfolgung ausnehmen. -> nur OnPush aktualisieren.
+
+Wie kann die aktualisierung der Komponente dennoch ausgelöst werden: 
+Change bound Data (@Input) // der Input muss jedoch ein wirklich geänderte Objekt sein, nur ein Inhalt würde nicht reichen. Immutableproblem
+Raise Event der Komponente auslösen
+Notify gebunden Observable ( {{ fligts$ | async }} ) ( hier können Subjects genutzt werden.) asnyc pipe hier wichtig, dass das ganze asynchron aktualisiert wird.
+
+Aktivierbar in changeDetection der Componente definiert werden.
+
+
+Immutable
+cpmst mewDate = ..
+const newFlight = {...oldFlight, date: newDAte);
+interessant in etwa so Array alt immutable aktualisieren: const newFlights : Flights[] = [newFlight, ...oldFlights.splice(1)];
+
+Sostiges:
+schreiben von anderen in mein Subjects verhindern, indem es zu normalem Observable gecastes wird:
+flightSubject = new Subject<Flight[]>();
+flight$ = this.flightSubject.asObservable; 
+
+
+### Ahead of Time Compilation (AOT)
+
+ng build --prod 
+ng build --prod -project projectname
+
+ausprobieren: 
+in Verzeichnis dist.. wechseln.
+live-server (wenn extension installiert ist) ggf. mit start objekt angabe. (in Doku nachlesen)
+
+### Server Side Rendering (SSR)
+renderModulefactory - Zentrale Methode für das SSR
+Renderer (Angular Methode) um den Renderingunterschied zwischen Server und Clientverarbeitung anzugleichen.
+
+
+### Service Worker 
+
+Einfach zu nuten mit Frameworks (Workbox (kann viel, aufwändiger)  oder Angular/service-worker (einfach zu handhaben))
 
 
