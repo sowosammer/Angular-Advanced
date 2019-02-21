@@ -8,6 +8,7 @@ Differenz : Submodule <-> Paket
 <link routerlink  ?? // vs. link zu css/less 
 httponly Cookies
 Haben wir FormGroup in unserer Anwendung
+Anschauen, wie dynamisch classes etc. im Template geändert werden über ts.
 
 Links:
 Softwarearchitekt.at
@@ -365,8 +366,37 @@ formControlName="xy" - sucht FormControl mit diesem Namen
 asynchron oder synchron.
 
 
+### dynamische Formulare
+
+metadaten für Felder werden benötigt, die dynamisch angepasst werden können.
+metadata = [{name: 'myname', anzeigename: 'myshowname', control: 'text'}
+]
+
+### validator für 
+
+Validatoren können beliebiges prüfen und auch zurückgeben.
+Der Typ der zurückgegeben wird kann in der hasError Methode des Formobjekts geprüft werden.
 
 
 
 ## Datagetriebene Formulare
+
+## Translate 
+entweder per Angular Compiler
+oder perngx-translate 
+
+### Im Angular Compiler
+schnell hat aber usabilty Nachteile
+
+### ngx-translate
+
+kann auch mit Parametern im der Übersetzung arbeiten {{ 'flight-counts' | translate {count = 7} }}
+
+Für unterschiedliche die Ausgabe auf Basis der WErte z.B. in abhängigkeit von zahlen: I18nPlural
+  Ähnliches gibt es auch für Parameterabhängige Ausgaben. i18n....
+
+# local Formats
+
+
+
 
