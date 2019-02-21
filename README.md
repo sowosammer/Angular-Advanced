@@ -7,6 +7,7 @@ Frage:
 Differenz : Submodule <-> Paket
 <link routerlink  ?? // vs. link zu css/less 
 httponly Cookies
+Haben wir FormGroup in unserer Anwendung
 
 Links:
 Softwarearchitekt.at
@@ -305,3 +306,67 @@ Einfach zu nutzen mit Frameworks (Workbox (kann viel, aufwändiger)  oder Angula
 @angular/service-worker installieren per: ng add @angular/pwa
 
 PWA: Grundsätzlich nützlich wenn alles außer index.html gecached wird. Diese ist Problematisch im bezug auf SSR.
+
+
+# Formulare
+
+## Template getrieben - wie bisher
+
+- ngModel im Template
+- kommt mit FormsModule
+- es kommen auch validatoren mit (required minlength="3" o.Ä.)
+
+<form #f="ngForm"> 
+  <input type="test" name="from" [(ngModel)]="from" required minlength="3">
+  
+  <div *nfif="!f?.controls['from']?.valid">
+   ... Error..
+   </div>
+
+
+
+## Reaktive Formulare
+
+- benötigt wird das ReactiveFormsModule
+- für aufwändige (ggf. über mehrere Componenten erstreckte Formulare)
+- FormGroup (form: FormGroup)
+
+IM construktor werden die Formularelemente (FormControl oder ?) mit ihrem Default angelegt.
+
+construcor(..) {
+  formcontrols anlegen
+  formcontrols zu groupform hinzugeben
+  
+  validator (kann liste von validatoren sein)
+  
+  oder 
+  
+  asynchrone Validatoren.
+  
+  }
+
+ggf. Nutzen des Formbuilders - nachlesen.
+
+#### Sonstige:
+formGroup  - identifiziert eine Group
+formGroupName="xy" - sucht Form mit diesem Namen
+
+formControl  - identifiziert einn Controlname
+formControlName="xy" - sucht FormControl mit diesem Namen
+
+
+### API
+
+- form.valueChanges (Änderung irgendwo in der Form)
+- form.controls['nach'].valueChanges 
+
+### validatren
+
+asynchron oder synchron.
+
+
+
+
+
+## Datagetriebene Formulare
+
